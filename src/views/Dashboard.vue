@@ -28,25 +28,45 @@
           <h2 class="mt-4">
             <span class="pb-1 border-b-2 font-sans font-semibold border-green-500"> Records </span>
           </h2>
-          <section class="flex mt-8 justify-around flex-wrap">
-            <article v-for="(ik, i) in farmRecs" id="articleCon" class="transition duration-500 ease-in-out hover:bg-green-900 transform hover:-translate-y-1 hover:scale-110 hover:font-sans hover:font-light rounded-xl my-4 hover:cursor-pointer hover:text-gray-200 hover:shadow-md bg-green-100 hover:z-40 z-20" :key="i">
-              <img :src="ik.imgUrl" alt="farm harvest" class="h-32 w-full" />
-              <h3 class="text-left font-sans font-bold pl-1 text-sm">
-                {{ ik.harvest }}
-              </h3>
-              <p class="text-left font-sans font-bold mt-1 pl-1 text-xs" style="color: brown">
-                {{ ik.timeStamp }}
-              </p>
-              <p class="text-left font-sans font-bold pl-1 text-xs" style="color: brown">
-                {{ ik.plot }}
-              </p>
-              <section class="px-2">
-                <p class="text-sm mt-2 rounded-md font-sans font-semibold">
-                  {{ ik.bio }}
-                </p>
-              </section>
-            </article>
-          </section>
+
+          <div id="list-demo">
+            <button @click="add">Add</button>
+            <button @click="remove">Remove</button>
+            <transition-group name="list" tag="p">
+              <span v-for="item in items" :key="item" class="list-item">
+                {{ item }}
+              </span>
+            </transition-group>
+          </div>
+
+          <div id="demo">
+            <input v-model="query" class="bg-red-400" type="text" />
+            <transition-group name="staggered-fade" tag="ul" :css="false" @before-enter="beforeEnter" @enter="enter" @leave="leave">
+              <li v-for="(item, index) in computedList" :key="item.msg" :data-index="index">
+                {{ item.msg }}
+              </li>
+            </transition-group>
+          </div>
+
+          <div class="bg-gray-300 text-gray-800 antialiased min-h-screen flex flex-col justify-end">
+            <div class="bg-gray-400 px-8 py-8 flex justify-center">
+            <ul>
+              <li><a href="">
+              
+              </a>
+              </li>
+            </ul>
+              <button class="bg-white hover:bg-gray-100 shadow-md border rounded-lg px-4 py-4 flex items-center -mt-16" style="width: 20rem">
+                <img src="https://image.freepik.com/free-photo/portrait-happy-woman-smiling_1303-9953.jpg" alt="avatar" class="rounded-full w-10 h-10" />
+                <div class="ml-4">
+                  <div class="font-semibold font-sans">
+                    Hey Email Invite
+                    <div class="text-left text-gray-700 font-sans">Jason Erica</div>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </div>
         </section>
         <section class="bg-gray-200">
           <highcharts :options="options" ref="highcharts"></highcharts>
@@ -68,7 +88,10 @@ export default {
   },
   setup(props) {
     let store = useStore();
+    var vm = this;
     let state = reactive({
+      items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      nextNum: 10,
       visible: false,
       options: {
         chart: {
@@ -133,16 +156,20 @@ export default {
           },
         ],
       },
+
       navBtn: [
         { title: "Profile", icon: "fas fa-user-alt" },
         { title: "Record", icon: "fas fa-record-vinyl" },
         { title: "Support", icon: "fas fa-phone-volume" },
         { title: "Blog", icon: "fas fa-blog" },
       ],
+      query: "",
+      list: [{ msg: "Bruce Lee" }, { msg: "Jackie Chan" }, { msg: "Chuck Norris" }, { msg: "Jet Li" }, { msg: "Kung Fury" }],
       name: store.getters.getFarmerData("get-name"),
       farmRecs: computed(() => {
         return store.getters.getFarmerData("get-record");
       }),
+      computedList: computed(() => state.list.filter((item) => item.msg.toLowerCase().indexOf(state.query.toLowerCase()) !== -1)),
       greetUser: computed(() => {
         let myHrs = new Date().getHours();
 
@@ -153,14 +180,64 @@ export default {
     });
 
     const switchUI = (index, label) => {};
+
     const Logo = require("../assets/img/myl.png");
 
-    return { ...toRefs(state), switchUI, Logo, store };
+    function beforeEnter(el) {
+      el.style.opacity = 0;
+      el.style.height = 0;
+    }
+    function enter(el, done) {
+      gsap.to(el, {
+        opacity: 1,
+        height: "1.6em",
+        delay: el.dataset.index * 0.15,
+        onComplete: done,
+      });
+    }
+    function leave(el, done) {
+      gsap.to(el, {
+        opacity: 0,
+        height: 0,
+        delay: el.dataset.index * 0.15,
+        onComplete: done,
+      });
+    }
+
+    function randomIndex() {
+      return Math.floor(Math.random() * this.items.length);
+    }
+
+    function add() {
+      this.items.splice(this.randomIndex(), 0, this.nextNum++);
+    }
+
+    function remove() {
+      this.items.splice(this.randomIndex(), 1);
+    }
+
+    return { ...toRefs(state), switchUI, Logo, store, randomIndex, add, remove, beforeEnter, enter, leave };
   },
 };
 </script>
 
 <style lang="scss">
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-move {
+  transition: transform 0.8s ease;
+}
 #container {
   position: relative;
   display: grid;
