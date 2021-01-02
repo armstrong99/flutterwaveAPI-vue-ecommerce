@@ -93,69 +93,7 @@ export default {
       items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       nextNum: 10,
       visible: false,
-      options: {
-        chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
-          type: "pie",
-        },
-        title: {
-          text: "Farm market shares in January, 2020",
-        },
-        tooltip: {
-          pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
-        },
-        accessibility: {
-          point: {
-            valueSuffix: "%",
-          },
-        },
-        plotOptions: {
-          pie: {
-            allowPointSelect: true,
-            cursor: "pointer",
-            dataLabels: {
-              enabled: false,
-            },
-            showInLegend: true,
-          },
-        },
-        series: [
-          {
-            name: "Brands",
-            colorByPoint: true,
-            data: [
-              {
-                name: "Farm Harvest",
-                y: 61.41,
-                sliced: true,
-                selected: true,
-              },
-              {
-                name: "Fish Harvest",
-                y: 11.84,
-              },
-              {
-                name: "Snail",
-                y: 10.85,
-              },
-              {
-                name: "Plantain Harvest",
-                y: 4.67,
-              },
-              {
-                name: "Coco",
-                y: 4.18,
-              },
-              {
-                name: "Fruits",
-                y: 7.05,
-              },
-            ],
-          },
-        ],
-      },
+       
 
       navBtn: [
         { title: "Profile", icon: "fas fa-user-alt" },

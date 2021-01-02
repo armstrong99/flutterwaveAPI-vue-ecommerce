@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     visible: false,
+    cartItem: 5,
     farmers: {
       "arms@gmail.com": {
         name: "Armstrong Ndukwe",
@@ -76,6 +77,7 @@ export default createStore({
   },
   getters: {
     getModalState: (state) => state.visible,
+    getCartItem: (state) => state.cartItem,
     getFarmerData: (state) => id => {
        switch (id) {
         case 'get-name':return Object.values(state.farmers)[0].name.split(' ')[0]
