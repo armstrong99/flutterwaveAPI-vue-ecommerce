@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint",
     "e2e": "vue-cli-service test:e2e",
     "unit": "vue-cli-service test:unit",
-    "backend": "nodemon backend/connect.db.js"
+    "end": "nodemon end/connect.db.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
