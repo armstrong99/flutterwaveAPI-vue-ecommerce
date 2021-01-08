@@ -81,23 +81,32 @@
           </p>
         </article>
 
-        <section class="text-left">
-          <img
-            src="https://o.remove.bg/downloads/092e8492-8a7c-44d0-8c20-e276b992058d/pexels-photo-2529148-removebg-preview.png"
-            alt=""
-            style="height: 25rem"
-          />
-          <p>Dry Iron DI-1255 - Whilte/Black</p>
-          <p><b>$ 3,600 </b></p>
-          <button
-            id="btnSignUp"
-            class="mr-2 list-none font-semibold font-sans cursor-pointer"
+        <section
+          v-bind:class="{ imgLandPage: mouseover }"
+          @mouseleave="startInterval"
+          @mouseenter="stopInterval"
+        >
+          <section
+            class="text-center"
+            v-for="k in values"
+            :key="k.no"
+            v-show="k.no === slideNo"
           >
-            Buy now
-          </button>
-          <spam class="text-gray-100 cursor-pointer opacity-50 hover:opacity-100">
-            / view store</spam
-          >
+            <img :src="k.url" alt="" style="height: 23.5rem; width: 30rem" />
+            <p>{{ k.title }}</p>
+            <p>
+              <b>$ {{ k.price }} </b>
+            </p>
+            <button
+              id="btnSignUp"
+              class="mr-2 list-none font-semibold font-sans cursor-pointer"
+            >
+              <router-link to="/store/gino@gmail.com"> Buy now</router-link>
+            </button>
+            <spam class="text-gray-100 cursor-pointer opacity-50 hover:opacity-100">
+              <router-link to="/store/gino@gmail.com"> / view store </router-link>
+            </spam>
+          </section>
         </section>
       </section>
 
@@ -132,19 +141,84 @@ export default {
     const ModalPic = require("../assets/img/girl.png");
     const state = reactive({
       modal: false,
+      slideNo: 0,
+      values: [
+        {
+          no: 1,
+          url: require("../assets/img/shoe1.png"),
+          price: "7,893",
+          title: "futureX Soles - Whilte/Black",
+        },
+        {
+          no: 2,
+          url: require("../assets/img/shoe2.png"),
+          price: "1,293",
+          title: "AbaROX_2221 - Foreign China wears",
+        },
+        {
+          no: 3,
+          url: require("../assets/img/shoe3.png"),
+          price: "4,643",
+          title: "PlainGins 5500K (exported)",
+        },
+      ],
+      intervalID: "",
+      mouseover: true,
     });
     onMounted(() => {
       state.modal = true;
+      state.slideNo = state.values[0].no;
+      startSlide();
     });
+
     const close = () => {
       state.modal = !state.modal;
     };
-    return { Logo, ...toRefs(state), ModalPic, close };
+
+    const startSlide = () => {
+      state.intervalID = setInterval(() => {
+        state.slideNo = state.slideNo + 1;
+        if (state.slideNo > state.values.length) {
+          state.slideNo = state.values[0].no;
+        }
+      }, 4000);
+    };
+
+    const stopInterval = () => {
+      clearInterval(state.intervalID);
+      state.mouseover = !state.mouseover;
+    };
+
+    const startInterval = () => {
+      startSlide();
+      state.mouseover = !state.mouseover;
+    };
+
+    return { Logo, ...toRefs(state), ModalPic, close, stopInterval, startInterval };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.imgLandPage {
+  animation: imgLandAnimation 4s infinite;
+  transition: 1s ease-in-out;
+}
+
+@keyframes imgLandAnimation {
+  from {
+    transition: 1s ease-in-out;
+    transform: translateX(-1rem);
+    opacity: 0.2;
+  }
+
+  to {
+    transition: 1s ease-in-out;
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

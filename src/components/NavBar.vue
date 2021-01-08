@@ -4,7 +4,7 @@
       class="flex md:justify-around justify-between items-center w-100 md:w-64"
       id="navContent"
     >
-      <router-link to="/about">
+      <router-link to="/">
         <figure class="w-100">
           <img :src="Logo" class="md:w-16 md:h-16" alt="agric_io" />
         </figure>
@@ -17,7 +17,7 @@
       </router-link>
 
       <router-link to="#">
-        <li class="list-none font-semibold" v-if="cartItem !== 0">
+        <li class="list-none font-semibold" v-if="cartItem !== 0" @click="alerter()">
           <span class="rounded text-white p-1 mx-1" style="background: #7da14a">
             {{ cartItem }}
           </span>
@@ -26,11 +26,13 @@
       </router-link>
     </section>
     <section class="flex ml-auto justify-around items-center w-32" id="authLinks">
-      <router-link to="/dashboard">
-        <li class="list-none font-semibold">Login</li>
+      <router-link to="/sign">
+        <li class="list-none font-semibold">Dashboard</li>
       </router-link>
-      <router-link to="/dashboard">
-        <li id="btnSignUp" class="list-none font-semibold font-sans">Sign up</li>
+      <router-link to="/sign">
+        <li id="btnSignUp" class="list-none text-white font-semibold font-sans">
+          Sign up
+        </li>
       </router-link>
     </section>
   </nav>
@@ -49,7 +51,11 @@ export default {
         cartItem: computed(() => store.getters.getCartItem),
       });
 
-    return { Logo, ...toRefs(state) };
+      const alerter = () => {
+        alert('This feature is not available at the moment,\n pls buy directy with the BUY NOW button, thanks.')
+      }
+
+    return { Logo, ...toRefs(state), alerter };
   },
 };
 </script>
