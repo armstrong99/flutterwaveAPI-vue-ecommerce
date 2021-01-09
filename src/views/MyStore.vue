@@ -47,7 +47,15 @@
         </button>
         <button
           v-show="products.length > 0"
-          @click="makePayment(k.productPrice, k.productDescription, k.subID, k.id)"
+          @click="
+            makePayment(
+              k.productPrice,
+              k.productDescription,
+              k.subID,
+              k.id,
+              k.deliveryFee
+            )
+          "
           class="bg-green-400 block rounded text-white p-2 mt-8 cursor-pointer"
         >
           {{ !bought.includes(k.id) ? "Buy now" : "Bought" }}
@@ -96,7 +104,15 @@
           </button>
           <button
             v-show="products.length > 0"
-            @click="makePayment(k.productPrice, k.productDescription, k.subID, k.id)"
+            @click="
+              makePayment(
+                k.productPrice,
+                k.productDescription,
+                k.subID,
+                k.id,
+                k.deliveryFee
+              )
+            "
             class="bg-green-400 block rounded ml-12 text-white p-2 mt-8 cursor-pointer"
           >
             {{ !bought.includes(k.id) ? "Buy now" : "Bought" }}
@@ -156,16 +172,17 @@ export default {
         state.dispatherID = dispatherID;
       } catch (error) {
         state.errBtn = true;
-        state.msg = "Pls we are sorry, an error occured ";
+        state.msg = "Pls we are sorry, an error occured or shop does not exist ";
       }
     };
 
-    function makePayment(amt = 2000, desc, subID, id) {
+    function makePayment(amt = 2000, desc, subID, id, deliveryFee) {
+      console.log(subID);
       FlutterwaveCheckout({
         public_key: process.env.VUE_APP_PUBLIC_KEY,
         tx_ref: "hooli-tx-1920bbtyt" + Date.now(),
-        amount: amt,
-        currency: "NGN",
+        amount: Number(amt) + Number(deliveryFee),
+        currency: "USD",
         country: "NG",
         payment_options: "card, mobilemoneyghana, ussd",
         // specified redirect URL

@@ -51,12 +51,13 @@ export default {
     });
     const apiPayConfirm = async () => {
       try {
-        let api = `${process.env.VUE_APP_SERVER_BASE_UR}/pay/confirmTrans`;
+        let api = `${process.env.VUE_APP_SERVER_BASE_URL}/pay/confirmTrans`;
         let data = {
           trans_id: state.trans_id,
           busBio: { ...state.localData, products: [] },
         };
         let ans = await axios.post(api, data);
+        console.log(ans);
         let { verified_register } = ans.data;
         if (verified_register) {
           localStorage.setItem("state", JSON.stringify(verified_register));
@@ -64,6 +65,7 @@ export default {
             "Congratulations!!!, transaction was confirmed and a subaccount has been created for you";
         } else throw Error();
       } catch (error) {
+        console.log(error);
         state.msg = "An Error occured, pls refresh the page";
       }
     };

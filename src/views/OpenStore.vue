@@ -419,7 +419,7 @@ export default {
         max = Math.floor(max);
         return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
       }
-      let accArr = [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
+      let accArr = [35, 36, 38, 39, 40, 41, 42, 43, 44, 45];
       let testAcc = getRandomInt(0, accArr.length);
       localStorage.setItem(
         "state",
@@ -438,7 +438,7 @@ export default {
         public_key: process.env.VUE_APP_PUBLIC_KEY,
         tx_ref: "hooli-tx-1920bbtyt" + Date.now(),
         amount: 20,
-        currency: "NGN",
+        currency: "USD",
         country: state.country,
         payment_options: "card, mobilemoneyghana, ussd",
         // specified redirect URL
@@ -461,8 +461,7 @@ export default {
         customizations: {
           title: "My store",
           description: "Payment for owing a store",
-          logo:
-            "https://thehill.com/sites/default/files/sponsored_image/intuit-photo.jpg",
+          logo: "https://dwglogo.com/wp-content/uploads/2017/11/Shopify_logo_01.png",
         },
       });
     }

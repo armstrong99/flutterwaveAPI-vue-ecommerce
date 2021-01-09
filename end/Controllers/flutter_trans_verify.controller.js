@@ -1,3 +1,4 @@
+require("dotenv").config();
 let request = require("request");
 let store = require("../runtimeStore");
 let SEC_KEY = process.env.SEC_KEY;
@@ -5,6 +6,7 @@ let flutter_createSubAct = require("../helperFlutterAPI/flutter_createSubAct");
 
 exports.verify_trans_registerUser = async (req, res) => {
   let { trans_id, busBio } = req.body;
+
   try {
     //pls remove this line of code, store should be populated only when transaction is verified, and also return false for non-success below, remove all the create account
     //1. verify flutter payment
