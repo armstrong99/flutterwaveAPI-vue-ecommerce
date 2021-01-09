@@ -1,5 +1,7 @@
 # How it works
 
+## Ensure you have an active INTERNET CONNECTION as some of the Assets depends on CDN to render.
+
 ### - Ndukwe Armstrong(armstrong.ndukwe)
 
 ## Table of Contents
@@ -116,6 +118,8 @@ The transaction is verified and the user details are stored in db and the subacc
 ```
 
 ### To test the API's directly, see a complete description and practical use of them using POSTMAN, you may click on the button/link below
+
+#### Ensure you have an active INTERNET CONNECTION as some of the Assets depends on CDN to render.
 
 `Postman Link`
 
