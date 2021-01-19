@@ -2,7 +2,7 @@
 
 ## Ensure you have an active INTERNET CONNECTION as some of the Assets depends on CDN to render.
 
-### - Ndukwe Armstrong(armstrong.ndukwe)
+### - Ndukwe Armstrong(armstrong.ndukwe@gmail.com)
 
 ## Table of Contents
 
